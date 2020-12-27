@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from '../components/Navbar';
 import Badge from '../components/Badge';
+import BadgeForm from '../components/BadgeForm';
 import header from '../images/badge-header.svg';
 
 import './styles/BadgeNew.css';
@@ -27,10 +28,10 @@ class BadgeNew extends React.Component{
                         alt="Logo"
                     />
                 </div>
-                {/* Badge */}
+                {/* Badge y form */}
                 <div className="container">
                     <div className="row">
-                        <div className="col">
+                        <div className="col-6">
                             <Badge
                                 firstName="Guillermo"
                                 lastName="Ortiz"
@@ -39,10 +40,11 @@ class BadgeNew extends React.Component{
                                 avatarUrl="https://www.gravatar.com/avatar?d=identicon"
                             />
                         </div>
+                        <div className="col-6">
+                            <BadgeForm/>
+                        </div>
                     </div>
                 </div>
-                {/* Formulario */}
-                <div></div>
             </div>
         )
     }
