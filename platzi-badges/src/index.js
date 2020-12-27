@@ -10,4 +10,13 @@ const container = document.getElementById('app');
 // Badge es un componente, render recibe un elemento
 // El componente se hace elemento como si fuera html.
 
-ReactDOM.render(<Badge/>, container);
+ReactDOM.render(
+    <Badge
+        firstName="Guillermo" 
+        lastName="Ortiz"
+        jobTitle="Fullstack developer"
+        twitter="guillermo"
+        avatarUrl="https://www.gravatar.com/avatar?d=identicon"
+    />, 
+    container
+);
