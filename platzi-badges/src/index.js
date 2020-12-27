@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 import './global.css';
 // Vamos a mostrar el componente
-import Badge from './components/Badge'
+import BadgeNew from './pages/BadgeNew';
 
 const container = document.getElementById('app');
 
@@ -11,12 +11,6 @@ const container = document.getElementById('app');
 // El componente se hace elemento como si fuera html.
 
 ReactDOM.render(
-    <Badge
-        firstName="Guillermo" 
-        lastName="Ortiz"
-        jobTitle="Fullstack developer"
-        twitter="guillermo"
-        avatarUrl="https://www.gravatar.com/avatar?d=identicon"
-    />, 
+    <BadgeNew/>, 
     container
 );
