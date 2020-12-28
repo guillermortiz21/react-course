@@ -15,6 +15,14 @@ import './styles/BadgeNew.css';
 */
 
 class BadgeNew extends React.Component{
+    state = {form: {
+        firstName:"",
+        lastName:"",
+        email:"",
+        jobTitle:"",
+        twitter:"",
+    }}
+
     render(){
         return(
             <div>
@@ -33,20 +41,32 @@ class BadgeNew extends React.Component{
                     <div className="row">
                         <div className="col-6">
                             <Badge
-                                firstName="Guillermo"
-                                lastName="Ortiz"
-                                twitter="guillermo"
-                                jobTitle="Fullstack developer"
+                                firstName={this.state.form.firstName}
+                                lastName={this.state.form.lastName}
+                                twitter={this.state.form.twitter}
+                                jobTitle={this.state.form.jobTitle}
+                                email={this.state.form.email}
                                 avatarUrl="https://www.gravatar.com/avatar?d=identicon"
                             />
                         </div>
                         <div className="col-6">
-                            <BadgeForm/>
+                            <BadgeForm onChange={this.handleChange}
+                            formValues={this.state.form}
+                        />
                         </div>
                     </div>
                 </div>
             </div>
         )
+    }
+
+    handleChange = e => {
+        this.setState({
+            form:{
+                ...this.state.form, // Agregar todos los valores que ya tenía
+                [e.target.name]: e.target.value
+            }
+        });
     }
 }
 
