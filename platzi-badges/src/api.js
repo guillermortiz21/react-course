@@ -24,6 +24,8 @@ async function callApi(endpoint, options = {}) {
 const api = {
   badges: {
     list() {
+      // return [] // Simulated empty array
+      //throw new Error("Simulated error");
       return callApi('/badges');
     },
     create(badge) {

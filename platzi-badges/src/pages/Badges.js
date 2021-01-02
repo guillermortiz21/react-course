@@ -5,73 +5,56 @@ import confLogo from '../images/badge-header.svg'
 
 import './styles/Badges.css';
 
+import api from '../api';
+
 class Badges extends React.Component{
   constructor(props){
     super(props); // Se inicia la superclase
-    console.log("1. contructor");
     // El constructor es el mejor lugar para iniciar el estado.
+    console.log("Contructor");
     this.state = {
+      loading: true,
+      error: null,
       data: []
     }
   }
 
   componentDidMount(){
-    console.log("3. did mount");
-    this.timeoutId = setTimeout(() => {
-      this.setState({
-        data: [
-          {
-            id: '2de30c42-9deb-40fc-a41f-05e62b5939a7',
-            firstName: 'Freda',
-            lastName: 'Grady',
-            email: 'Leann_Berge@gmail.com',
-            jobTitle: 'Legacy Brand Director',
-            twitter: 'FredaGrady22221-7573',
-            avatarUrl:
-              'https://www.gravatar.com/avatar/f63a9c45aca0e7e7de0782a6b1dff40b?d=identicon',
-          },
-          {
-            id: 'd00d3614-101a-44ca-b6c2-0be075aeed3d',
-            firstName: 'Major',
-            lastName: 'Rodriguez',
-            email: 'Ilene66@hotmail.com',
-            jobTitle: 'Human Research Architect',
-            twitter: 'MajorRodriguez61545',
-            avatarUrl:
-              'https://www.gravatar.com/avatar/d57a8be8cb9219609905da25d5f3e50a?d=identicon',
-          },
-          {
-            id: '63c03386-33a2-4512-9ac1-354ad7bec5e9',
-            firstName: 'Daphney',
-            lastName: 'Torphy',
-            email: 'Ron61@hotmail.com',
-            jobTitle: 'National Markets Officer',
-            twitter: 'DaphneyTorphy96105',
-            avatarUrl:
-              'https://www.gravatar.com/avatar/e74e87d40e55b9ff9791c78892e55cb7?d=identicon',
-          }
-        ]
-      })
-    }, 3000)
+    // El componente ya está en pantalla,
+    // por lo que ya puede recibir datos.
+    console.log("Mount done");
+    this.fetchData();
   }
 
-  componentDidUpdate(prevProps, prevState){
-    console.log("5. did update");
-    console.log({prevProps, prevState});
-    console.log({
-      props: this.props,
-      state: this.state
-    })
+  fetchData = async () =>{
+    this.setState({loading: true, error: null});
+    try{
+      const data = await api.badges.list();
+      this.setState({loading: false, data});
+    }catch(error){
+      console.log("error")
+      this.setState({loading: false, error});
+    }
   }
 
-  componentWillUnmount(){
-    console.log("6. will unmount");
-    // Limpiamos trabajos pendientes.
-    clearTimeout(this.timeoutId);
+  componentDidUpdate(){
+    console.log("Update done")
   }
 
   render(){
-    console.log("2/4. render")
+    if(this.state.loading === true){
+      return "Loading...";
+    }
+
+    if(this.state.error){
+      return(
+        <h1>
+          Error: {this.state.error.message}
+        </h1>
+      )
+    }
+
+    console.log("Rendering");
     return(
       <React.Fragment>
         <div className="Badges">
