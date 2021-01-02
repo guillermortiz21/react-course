@@ -1,6 +1,7 @@
 import React from 'react'
 import BadgesList from '../components/BadgesList';
 import PageLoading from '../components/PageLoading';
+import PageError from '../components/PageError';
 import {Link} from 'react-router-dom'
 import confLogo from '../images/badge-header.svg'
 
@@ -48,11 +49,7 @@ class Badges extends React.Component{
     }
 
     if(this.state.error){
-      return(
-        <h1>
-          Error: {this.state.error.message}
-        </h1>
-      )
+      return <PageError error={this.state.error.message}/>
     }
 
     console.log("Rendering");
