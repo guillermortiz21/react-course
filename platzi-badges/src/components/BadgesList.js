@@ -23,8 +23,7 @@ class BadgeListItem extends React.Component{
 }
 
 class BadgesList extends React.Component{
-  render(){
-    console.log(this.state)
+  render(){ 
     return(
       <ul className="BadgesList">
         {this.props.badges.map((badge) =>{
