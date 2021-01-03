@@ -9,7 +9,7 @@ class BadgeForm extends React.Component{
     return(
       <div>
         <h1>New Attendant</h1>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.props.onSubmit}>
           <div className="form-group">
             <label>
               First Name
@@ -62,33 +62,10 @@ class BadgeForm extends React.Component{
               value={this.props.formValues.twitter}
               />
           </div>
-          <button 
-            className="btn btn-primary"
-            onClick={this.handleClick}
-            //type="button"
-          >
-            Save
-          </button>
+          <button className="btn btn-primary">Save</button>
         </form>
       </div>
     )
-  }
-
-  /*props.onChange = (e) => {
-    // Guardamos en estado
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  }*/
-
-  handleClick = (e) => {
-    console.log("Button was clicked");
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("submit!")
-    console.log(this.state);
   }
 }
 
