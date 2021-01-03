@@ -7,6 +7,9 @@ import './styles/BadgeDetails.css';
 import { Link } from 'react-router-dom';
 
 function BadgeDetails(props){
+  // Hooks!
+  const [count, setCount] = React.useState(0);
+
   return(
     <React.Fragment>
       {/* Hero */}
@@ -42,6 +45,11 @@ function BadgeDetails(props){
           <div className="col-5">
             <h1>Actions:</h1>
             <div>
+
+              <button onClick={() => {setCount(count + 1)}} className="btn btn-primary mb-4">
+                Increase count: {count}
+              </button>
+
               <Link
                 className="btn btn-primary mb-4 BadgeDetails__buttons"
                 to={`/badges/${props.containerProps.match.params.badgeId}/edit`}
