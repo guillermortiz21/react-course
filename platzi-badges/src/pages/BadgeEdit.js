@@ -6,7 +6,7 @@ import PageLoading from '../components/PageLoading';
 
 import api from '../api';
 
-import './styles/BadgeNew.css';
+import './styles/BadgeEdit.css';
 
 /*
   Este componente es una página, cuenta con:
@@ -16,9 +16,9 @@ import './styles/BadgeNew.css';
     formulario
 */
 
-class BadgeNew extends React.Component{
+class BadgeEdit extends React.Component{
   state = {
-    loading: false,
+    loading: true,
     error: null,
     form: {
       firstName:"",
@@ -29,6 +29,27 @@ class BadgeNew extends React.Component{
     }
   }
 
+  componentDidMount(){
+    // I need to get the id of the badge and the do a petition
+    // to fetch de badge's data.
+    this.fetchData();
+  }
+
+  fetchData = async () => {
+    this.setState({loading: true, error: null});
+    try{
+      // The id of the batch is in the params of the URL
+      // It is in props.match.params.badgeId
+      const data = await api.badges.read(
+        this.props.match.params.badgeId
+      );
+      this.setState({loading: false, form: data});
+    }catch(error){
+      this.setState({loading: false, error});
+    }
+  }
+
+
   render(){
     if(this.state.loading === true){
       return(
@@ -38,9 +59,9 @@ class BadgeNew extends React.Component{
     return(
       <React.Fragment>
         {/* Hero */}
-        <div className="BadgeNew__hero">
+        <div className="BadgeEdit__hero">
           <img 
-            className="BadgeNew_hero-image img-fluid" 
+            className="BadgeEdit_hero-image img-fluid" 
             src={header}
             alt="Logo"
           />
@@ -55,11 +76,10 @@ class BadgeNew extends React.Component{
                 twitter={this.state.form.twitter || "Twitter"}
                 jobTitle={this.state.form.jobTitle || "Job title"}
                 email={this.state.form.email || "Email"}
-                avatarUrl="https://www.gravatar.com/avatar?d=identicon"
               />
             </div>
             <div className="col-6">
-              <h1>New Badge</h1>
+              <h1>Edit Badge</h1>
               <BadgeForm 
                 onChange={this.handleChange}
                 onSubmit={this.handleSubmit}
@@ -86,7 +106,10 @@ class BadgeNew extends React.Component{
     e.preventDefault();
     this.setState({loading:true, error: null}) 
     try{
-      await api.badges.create(this.state.form);
+      await api.badges.update(
+        this.props.match.params.badgeId,
+        this.state.form
+      );
       this.setState({loading: false});
 
       this.props.history.push('/badges');
@@ -97,4 +120,4 @@ class BadgeNew extends React.Component{
   }
 }
 
-export default BadgeNew;
+export default BadgeEdit;
