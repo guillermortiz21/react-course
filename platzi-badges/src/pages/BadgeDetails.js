@@ -6,9 +6,17 @@ import header from '../images/platziconf-logo.svg';
 import './styles/BadgeDetails.css';
 import { Link } from 'react-router-dom';
 
+function useIncreaseCount(max){
+  const [count, setCount] = React.useState(0);
+  if(count > max){
+    setCount(0);
+  }
+  return[count, setCount];
+}
+
 function BadgeDetails(props){
   // Hooks!
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = useIncreaseCount(20);
 
   return(
     <React.Fragment>
