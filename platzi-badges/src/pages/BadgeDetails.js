@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import Badge from '../components/Badge';
+import DeleteBadgeModal from '../components/DeleteBadgeModal';
 import header from '../images/platziconf-logo.svg';
 import './styles/BadgeDetails.css';
 import { Link } from 'react-router-dom';
@@ -50,8 +50,17 @@ function BadgeDetails(props){
               </Link>
             </div>
             <div>
-              <button className="btn btn-danger BadgeDetails__buttons">Delete</button>
-              {ReactDOM.createPortal(<h1>Hey, I am a modal!</h1>, document.getElementById("modal"))}
+              <button 
+                className="btn btn-danger BadgeDetails__buttons"
+                onClick={props.onOpenModal}
+              >
+                Delete
+              </button>
+              <DeleteBadgeModal 
+                isOpen={props.modalIsOpen} 
+                onClose={props.onCloseModal}
+                onDeleteBadge={props.onDeleteBadge}
+              />
             </div>
           </div>
         </div>
