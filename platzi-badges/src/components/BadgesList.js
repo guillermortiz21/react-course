@@ -1,4 +1,5 @@
 import React from 'react'
+import Gravatar from './Gravatar';
 import { Link } from 'react-router-dom'
 import './styles/BadgesList.css'
 
@@ -6,11 +7,7 @@ class BadgeListItem extends React.Component{
   render(){
     return(
       <div className="BadgesListItem">
-        <img
-          className="BadgesListItem__avatar"
-          src={this.props.badge.avatarUrl} 
-          alt="Avatar"
-        />
+        {this.getImageElement()}
         <div>
           <strong>
             {this.props.badge.firstName} {this.props.badge.lastName}
@@ -20,6 +17,26 @@ class BadgeListItem extends React.Component{
         </div>
       </div>
     )
+
+  }
+
+  getImageElement = () => {
+    if(this.props.badge.avatarUrl){
+      return(
+        <img
+          className="BadgesListItem__avatar"
+          src={this.props.badge.avatarUrl} 
+          alt="Conf logo"
+        />
+      );
+    }
+    return(
+        <Gravatar
+          className="BadgesListItem__avatar"
+          email={this.props.badge.email}
+          alt="Conf logo"
+        />
+    );
   }
 }
 
