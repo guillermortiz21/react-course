@@ -2,7 +2,7 @@ import React from 'react'
 import Badge from '../components/Badge';
 import BadgeForm from '../components/BadgeForm';
 import header from '../images/platziconf-logo.svg';
-import PageError from '../components/PageError';
+import PageLoading from '../components/PageLoading';
 
 import api from '../api';
 
@@ -17,19 +17,23 @@ import './styles/BadgeNew.css';
 */
 
 class BadgeNew extends React.Component{
-  state = {form: {
-    firstName:"",
-    lastName:"",
-    email:"",
-    jobTitle:"",
-    twitter:"",
-  }}
+  state = {
+    loading: false,
+    error: null,
+    form: {
+      firstName:"",
+      lastName:"",
+      email:"",
+      jobTitle:"",
+      twitter:"",
+    }
+  }
 
   render(){
-    if(this.state.error){
+    if(this.state.loading === true){
       return(
-        <PageError error={this.state.error.message}/>
-      )
+        <PageLoading/>
+      );
     }
     return(
       <React.Fragment>
@@ -59,6 +63,7 @@ class BadgeNew extends React.Component{
                 onChange={this.handleChange}
                 onSubmit={this.handleSubmit}
                 formValues={this.state.form}
+                error={this.state.error}
               />
             </div>
           </div>
@@ -79,14 +84,14 @@ class BadgeNew extends React.Component{
   handleSubmit = async e => {
     e.preventDefault();
     this.setState({loading:true, error: null}) 
-    console.log("submit");
-    console.log(this.state);
     try{
       await api.badges.create(this.state.form);
       this.setState({loading: false});
+
+      this.props.history.push('/badges');
+
     }catch(error){
       this.setState({loading: false, error});
-      console.log(error.message);
     }
   }
 }
