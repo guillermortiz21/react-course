@@ -1,5 +1,6 @@
 import React from 'react'
 import Gravatar from './Gravatar';
+import SearchBar from './SearchBar';
 import { Link } from 'react-router-dom'
 import './styles/BadgesList.css'
 
@@ -17,7 +18,6 @@ function BadgeListItem(props){
     </div>
   )
 }
-
 
 function getImageElement(props){
   if(props.badge.avatarUrl){
@@ -38,10 +38,20 @@ function getImageElement(props){
   );
 }
 
+function BadgeToString(badge){
+  return `${badge.firstName} ${badge.lastName}`
+}
+
 function BadgesList(props){
-  if(props.badges.length === 0){
+  const [filteredBadges, setFilteredBadges] = React.useState(props.badges);
+  if(filteredBadges.length === 0){
     return(
       <div>
+        <SearchBar 
+          array={props.badges} 
+          setFilteredArray={setFilteredBadges}
+          toString={BadgeToString}
+        >Filter Badges</SearchBar>
         <h3>No badges were found</h3>
         <Link className="btn btn-primary" to="/badges/new">
           Create new badge
@@ -49,21 +59,29 @@ function BadgesList(props){
       </div>
     );
   }
+
   return(
-    <ul className="BadgesList">
-      {props.badges.map((badge) =>{
-        return(
-          <li key={badge.id}>
-            <Link 
-              className="text-reset text-decoration-none" 
-              to={`/badges/${badge.id}`}
-            >
-              <BadgeListItem badge={badge}/>
-            </Link>
-          </li>
-        )
-      })}
-    </ul>
+    <div className="BadgesList">
+      <SearchBar 
+        array={props.badges} 
+        setFilteredArray={setFilteredBadges}
+        toString={BadgeToString}
+      >Filter Badges</SearchBar>
+      <ul className="list-unstyled">
+        {filteredBadges.map((badge) =>{
+          return(
+            <li key={badge.id}>
+              <Link 
+                className="text-reset text-decoration-none" 
+                to={`/badges/${badge.id}`}
+              >
+                <BadgeListItem badge={badge}/>
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
+    </div>
   )
 }
 
